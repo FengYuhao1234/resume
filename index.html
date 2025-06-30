@@ -7,38 +7,62 @@
     <style>
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
-            background: #f7f9fa;
             margin: 0;
             color: #222;
+            background: linear-gradient(135deg, #eaf1fb 0%, #f7f9fa 100%);
+            min-height: 100vh;
+        }
+        .banner {
+            background: linear-gradient(90deg, #2d6cdf 60%, #6fa1f7 100%);
+            color: #fff;
+            padding: 36px 0 24px 0;
+            text-align: center;
+            position: relative;
+        }
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            object-fit: cover;
+            box-shadow: 0 4px 16px rgba(45,108,223,0.15);
+            margin-bottom: 12px;
+            background: #fff;
+        }
+        .name {
+            font-size: 2.3em;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-size: 1.15em;
+            color: #eaf1fb;
+            margin-bottom: 0.5em;
         }
         .container {
             max-width: 900px;
-            margin: 40px auto;
+            margin: -40px auto 40px auto;
+            padding: 0 16px;
+        }
+        .card {
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            padding: 40px 30px 30px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            margin-bottom: 28px;
+            padding: 32px 28px 24px 28px;
+            transition: box-shadow 0.2s;
         }
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.2em;
-            color: #2d6cdf;
-        }
-        .subtitle {
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 1.5em;
-        }
-        .section {
-            margin-bottom: 2.5em;
+        .card:hover {
+            box-shadow: 0 8px 32px rgba(45,108,223,0.13);
         }
         .section-title {
-            font-size: 1.3em;
+            font-size: 1.25em;
             color: #2d6cdf;
             border-left: 4px solid #2d6cdf;
-            padding-left: 10px;
-            margin-bottom: 1em;
+            padding-left: 12px;
+            margin-bottom: 1.2em;
             font-weight: bold;
+            letter-spacing: 1px;
         }
         .info-list, .skills-list, .honors-list {
             list-style: none;
@@ -46,104 +70,167 @@
             margin: 0;
         }
         .info-list li, .skills-list li, .honors-list li {
-            margin-bottom: 0.5em;
+            margin-bottom: 0.7em;
+            font-size: 1.05em;
+        }
+        .info-list li strong {
+            margin-right: 6px;
+        }
+        .icon {
+            margin-right: 6px;
         }
         .tag {
             display: inline-block;
             background: #eaf1fb;
             color: #2d6cdf;
             border-radius: 4px;
-            padding: 2px 10px;
-            margin-right: 8px;
-            font-size: 0.95em;
+            padding: 2px 12px;
+            margin: 2px 8px 2px 0;
+            font-size: 0.98em;
         }
-        .project-link, .model-link {
-            color: #2d6cdf;
-            text-decoration: none;
+        .progress-bar {
+            background: #eaf1fb;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 16px;
+            width: 180px;
+            display: inline-block;
+            vertical-align: middle;
             margin-right: 10px;
         }
-        .project-link:hover, .model-link:hover {
-            text-decoration: underline;
+        .progress {
+            height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #2d6cdf 60%, #6fa1f7 100%);
+        }
+        .btn-link {
+            display: inline-block;
+            background: linear-gradient(90deg, #2d6cdf 60%, #6fa1f7 100%);
+            color: #fff !important;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 18px;
+            margin: 6px 10px 6px 0;
+            font-size: 1em;
+            text-decoration: none;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(45,108,223,0.08);
+        }
+        .btn-link:hover {
+            background: linear-gradient(90deg, #1b4e9b 60%, #2d6cdf 100%);
+            box-shadow: 0 4px 16px rgba(45,108,223,0.13);
+        }
+        .honors-list li::before {
+            content: '🏅';
+            margin-right: 8px;
         }
         @media (max-width: 600px) {
             .container {
-                padding: 18px 5px;
+                padding: 0 2px;
             }
-            h1 {
-                font-size: 2em;
+            .card {
+                padding: 18px 6px 14px 10px;
+            }
+            .name {
+                font-size: 1.4em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>冯昱澔</h1>
+    <div class="banner">
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="avatar">
+        <div class="name">冯昱澔</div>
         <div class="subtitle">求职意向：大模型实习生</div>
-        <div class="section">
+    </div>
+    <div class="container">
+        <div class="card">
             <div class="section-title">基本信息</div>
             <ul class="info-list">
-                <li><strong>生日：</strong>2002.11.17</li>
-                <li><strong>地址：</strong>北京</li>
-                <li><strong>电话：</strong>19563133022</li>
-                <li><strong>邮箱：</strong>21711087@bjtu.edu.cn</li>
+                <li><span class="icon">🎂</span><strong>生日：</strong>2002.11.17</li>
+                <li><span class="icon">📍</span><strong>地址：</strong>北京</li>
+                <li><span class="icon">📞</span><strong>电话：</strong>19563133022</li>
+                <li><span class="icon">✉️</span><strong>邮箱：</strong>21711087@bjtu.edu.cn</li>
             </ul>
         </div>
-        <div class="section">
+        <div class="card">
             <div class="section-title">编程语言 & 技能</div>
-            <ul class="skills-list">
-                <li><span class="tag">Python</span><span class="tag">C++</span><span class="tag">C</span><span class="tag">Java</span></li>
-                <li><span class="tag">机器学习</span><span class="tag">Pytorch 深度学习</span><span class="tag">大语言模型调优</span></li>
-            </ul>
+            <div style="margin-bottom: 1em;">
+                <span class="tag">Python</span>
+                <span class="tag">C++</span>
+                <span class="tag">C</span>
+                <span class="tag">Java</span>
+            </div>
+            <div style="margin-bottom: 1em;">
+                <span class="tag">机器学习</span>
+                <span class="tag">Pytorch 深度学习</span>
+                <span class="tag">大语言模型调优</span>
+            </div>
+            <div style="margin-bottom: 0.5em;">
+                <span style="margin-right:8px;">Python</span>
+                <span class="progress-bar"><span class="progress" style="width:95%"></span></span>
+                <span style="color:#2d6cdf;">精通</span>
+            </div>
+            <div style="margin-bottom: 0.5em;">
+                <span style="margin-right:8px;">C++</span>
+                <span class="progress-bar"><span class="progress" style="width:85%"></span></span>
+                <span style="color:#2d6cdf;">熟练</span>
+            </div>
+            <div style="margin-bottom: 0.5em;">
+                <span style="margin-right:8px;">Java</span>
+                <span class="progress-bar"><span class="progress" style="width:70%"></span></span>
+                <span style="color:#2d6cdf;">良好</span>
+            </div>
         </div>
-        <div class="section">
+        <div class="card">
             <div class="section-title">教育背景</div>
             <ul class="info-list">
-                <li><strong>2021.09-2025.06</strong> 北京交通大学 信息管理与信息系统（本科）<br>
+                <li><span class="icon">🎓</span><strong>2021.09-2025.06</strong> 北京交通大学 信息管理与信息系统（本科）<br>
                     主修课程：信息系统开发，数据结构，商业智能，数据分析，数据库基础，数据库开发与应用，系统分析与设计，应用统计。<br>
                     平均成绩：90.4，GPA：3.78，排名：6/106<br>
                     2025.09 学术保研 计算机科学与技术
                 </li>
             </ul>
         </div>
-        <div class="section">
+        <div class="card">
             <div class="section-title">实习经历</div>
             <ul class="info-list">
-                <li><strong>2023.12-2024.2</strong> 北京ABB贝利工程有限公司 网络安全实习生<br>
+                <li><span class="icon">💼</span><strong>2023.12-2024.2</strong> 北京ABB贝利工程有限公司 网络安全实习生<br>
                     ● 入侵检测系统的检测与部署，安全防护防火墙的设置与管理，域服务器的配置与管理。<br>
                     ● 实现工业协议的深度过滤，通过多因子认证、操作告警以及访问管理。
                 </li>
-                <li><strong>2024.08~2024.08</strong> 云智慧（北京）科技有限公司 算法工程师（实习生）<br>
+                <li><span class="icon">💼</span><strong>2024.08~2024.08</strong> 云智慧（北京）科技有限公司 算法工程师（实习生）<br>
                     ● 协助公司建立了大模型的benchmark，运维领域测评数据集包含317条数据，9个运维领域，每个领域8个任务类别。
                 </li>
             </ul>
         </div>
-        <div class="section">
+        <div class="card">
             <div class="section-title">项目经历</div>
             <ul class="info-list">
-                <li><strong>2024.08</strong> 基于大语言模型的"信管研究方法论"课程阅卷系统开发 负责人<br>
+                <li><span class="icon">🧑‍💻</span><strong>2024.08</strong> 基于大语言模型的“信管研究方法论”课程阅卷系统开发 负责人<br>
                     ● 全栈开发，前后端分离；技术栈：HTML+CSS+JavaScript，Flask，FastAPI。<br>
-                    ● 负责deepseek-r1:8b本地大模型部署、微调、RAG链、提示词工程。开发专注于北京交通大学"信管研究方法论"课程阅卷的大语言模型grading-assistant，自建低秩微调训练语料573条（Alpaca）。<br>
-                    ● <a class="project-link" href="https://github.com/FengYuhao1234/-" target="_blank">项目地址</a>
-                    <a class="model-link" href="https://ollama.com/Fengdada/grading-assistant" target="_blank">大语言模型地址</a>
+                    ● 负责deepseek-r1:8b本地大模型部署、微调、RAG链、提示词工程。开发专注于北京交通大学“信管研究方法论”课程阅卷的大语言模型grading-assistant，自建低秩微调训练语料573条（Alpaca）。<br>
+                    ● <a class="btn-link" href="https://github.com/FengYuhao1234/-" target="_blank">项目地址</a>
+                    <a class="btn-link" href="https://ollama.com/Fengdada/grading-assistant" target="_blank">大语言模型地址</a>
                 </li>
-                <li><strong>2023.05</strong> 嘟嘟云校园 团队核心成员<br>
+                <li><span class="icon">🧑‍💻</span><strong>2023.05</strong> 嘟嘟云校园 团队核心成员<br>
                     ● 协助团队使用uni-app插件进行功能开发，后端大模型API开发与接入以及营收数据统计与分析。<br>
-                    ● <a class="project-link" href="https://wk.bjtuwh.cn/index.html" target="_blank">项目地址</a>
+                    ● <a class="btn-link" href="https://wk.bjtuwh.cn/index.html" target="_blank">项目地址</a>
                 </li>
             </ul>
         </div>
-        <div class="section">
+        <div class="card">
             <div class="section-title">荣誉与竞赛经历</div>
             <ul class="honors-list">
-                <li>2021-2022，2022-2023学年"二等学习优秀奖学金"，2023-2024学年"三等优秀学习奖学金"</li>
+                <li>2021-2022，2022-2023学年“二等学习优秀奖学金”，2023-2024学年“三等优秀学习奖学金”</li>
                 <li>2024 全国大学生市场调查与分析大赛 国家级三等奖</li>
                 <li>2023 中国国际大学生创新大赛北京赛区主赛道 北京市级一等奖（团队核心成员）</li>
                 <li>2024 中国国际大学生创新大赛北京赛区 两次获得北京市级二等奖（项目负责人）</li>
-                <li>2024 "挑战杯"首都大学生创业大赛 银奖</li>
+                <li>2024 “挑战杯”首都大学生创业大赛 银奖</li>
                 <li>2021-2022、2022-2023、2023-2024学年 校级三好学生</li>
             </ul>
         </div>
-        <div class="section">
+        <div class="card">
             <div class="section-title">自我评价</div>
             <p>我具备扎实的专业知识和丰富的实践经验，并且拥有较强的自学能力，可以在较短的时间内接受并应用新的技术。具有较强的团队沟通与协作能力，执行力强。同时我具备良好的时间管理能力，能够在高压环境下保持冷静，高效完成任务。</p>
         </div>
