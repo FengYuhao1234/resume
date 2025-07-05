@@ -9,15 +9,55 @@
             font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
             margin: 0;
             color: #222;
-            background: linear-gradient(135deg, #eaf1fb 0%, #f7f9fa 100%);
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center fixed;
+            background-size: cover;
             min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
         }
         .banner {
-            background: linear-gradient(90deg, #2d6cdf 60%, #6fa1f7 100%);
-            color: #fff;
-            padding: 36px 0 24px 0;
-            text-align: center;
             position: relative;
+            color: #fff;
+            padding: 70px 0 100px 0;
+            text-align: center;
+            background: none;
+            overflow: hidden;
+            scroll-snap-align: start;
+            scroll-margin-top: 60px;
+            min-height: calc(100vh - 50px);
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1), min-height 0.4s cubic-bezier(.4,0,.2,1);
+        }
+        .banner-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') center center/cover no-repeat;
+            z-index: 0;
+        }
+        .banner-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.55) 70%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(8px);
+            z-index: 1;
+        }
+        .banner-content {
+            position: relative;
+            z-index: 2;
         }
         .avatar {
             width: 110px;
@@ -33,27 +73,50 @@
             font-size: 2.3em;
             font-weight: bold;
             letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
         }
         .subtitle {
             font-size: 1.15em;
             color: #eaf1fb;
             margin-bottom: 0.5em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.18);
         }
         .container {
             max-width: 900px;
-            margin: -40px auto 40px auto;
+            margin: 0 auto 40px auto;
             padding: 0 16px;
+            position: relative;
+            z-index: 1;
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 0.5s;
+        }
+        .container.locked {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
         }
         .card {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
             margin-bottom: 28px;
             padding: 32px 28px 24px 28px;
-            transition: box-shadow 0.2s;
+            transition: all 0.6s cubic-bezier(.4,0,.2,1), opacity 0.6s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(40px);
+            scroll-snap-align: start;
+            scroll-margin-top: 90px;
+            min-height: calc(100vh - 110px);
         }
-        .card:hover {
-            box-shadow: 0 8px 32px rgba(45,108,223,0.13);
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card:first-child {
+            margin-top: 48px;
         }
         .section-title {
             font-size: 1.25em;
@@ -72,36 +135,57 @@
         .info-list li, .skills-list li, .honors-list li {
             margin-bottom: 0.7em;
             font-size: 1.05em;
+            line-height: 1.6;
         }
         .info-list li strong {
             margin-right: 6px;
+            color: #2d6cdf;
         }
         .icon {
             margin-right: 6px;
         }
         .tag {
             display: inline-block;
-            background: #eaf1fb;
+            background: rgba(234, 241, 251, 0.8);
             color: #2d6cdf;
             border-radius: 4px;
             padding: 2px 12px;
             margin: 2px 8px 2px 0;
             font-size: 0.98em;
+            border: 1px solid rgba(45, 108, 223, 0.2);
+        }
+        .skill-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
+        .skill-name {
+            width: 60px;
+            text-align: left;
+            margin-right: 8px;
+            flex-shrink: 0;
         }
         .progress-bar {
-            background: #eaf1fb;
+            background: #e0e6ef;
             border-radius: 8px;
             overflow: hidden;
             height: 16px;
-            width: 180px;
+            margin-right: 10px;
             display: inline-block;
             vertical-align: middle;
-            margin-right: 10px;
+            min-width: 60px;
         }
         .progress {
             height: 100%;
             border-radius: 8px;
-            background: linear-gradient(90deg, #2d6cdf 60%, #6fa1f7 100%);
+            background: linear-gradient(90deg, #1b2a47 60%, #2d6cdf 100%);
+            display: block;
+        }
+        .skill-level {
+            color: #2d6cdf;
+            min-width: 36px;
+            text-align: left;
+            margin-left: 8px;
         }
         .btn-link {
             display: inline-block;
@@ -113,16 +197,34 @@
             margin: 6px 10px 6px 0;
             font-size: 1em;
             text-decoration: none;
-            transition: background 0.2s, box-shadow 0.2s;
+            transition: all 0.2s ease;
             box-shadow: 0 2px 8px rgba(45,108,223,0.08);
         }
         .btn-link:hover {
             background: linear-gradient(90deg, #1b4e9b 60%, #2d6cdf 100%);
             box-shadow: 0 4px 16px rgba(45,108,223,0.13);
+            transform: translateY(-1px);
         }
         .honors-list li::before {
             content: '🏅';
             margin-right: 8px;
+        }
+        .education-item {
+            background: rgba(45, 108, 223, 0.05);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 3px solid #2d6cdf;
+        }
+        .education-item strong {
+            color: #2d6cdf;
+            font-size: 1.1em;
+        }
+        .education-details {
+            margin-top: 8px;
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
         }
         @media (max-width: 600px) {
             .container {
@@ -135,16 +237,282 @@
                 font-size: 1.4em;
             }
         }
+        @media (max-width: 900px) {
+            .navbar {
+                display: none;
+            }
+            .container {
+                max-width: 100vw;
+                padding: 0 4vw;
+            }
+            .card {
+                padding: 18px 6px 14px 10px;
+                border-radius: 12px;
+                margin-bottom: 18px;
+                min-height: calc(100vh - 80px);
+            }
+            .banner {
+                padding: 36px 0 60px 0;
+                min-height: calc(100vh - 80px);
+            }
+            .avatar {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 8px;
+            }
+            .name {
+                font-size: 1.3em;
+            }
+            .subtitle {
+                font-size: 1em;
+            }
+            .navbar {
+                font-size: 0.95em;
+                height: 44px;
+            }
+            .navbar li {
+                margin: 0 6px;
+            }
+            .unlock-tip {
+                font-size: 1em;
+                margin-bottom: 30px;
+            }
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(30, 42, 70, 0.75);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 54px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .navbar li {
+            margin: 0 18px;
+        }
+        .navbar a {
+            color: #fff;
+            font-size: 1.08em;
+            text-decoration: none;
+            padding: 8px 10px;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar a:hover, .navbar a.active {
+            background: #2d6cdf;
+            color: #fff;
+        }
+        @media (max-width: 600px) {
+            .navbar {
+                font-size: 0.95em;
+                height: 44px;
+            }
+            .navbar li {
+                margin: 0 8px;
+            }
+        }
+        .unlock-mask {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.18);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            transition: opacity 0.4s;
+            pointer-events: auto;
+        }
+        .unlock-mask.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .unlock-tip {
+            color: #fff;
+            font-size: 1.2em;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            user-select: none;
+        }
+        .unlock-arrow {
+            display: inline-block;
+            margin-left: 12px;
+            font-size: 1.5em;
+            animation: arrowMove 1.2s infinite alternate;
+        }
+        @keyframes arrowMove {
+            0% { transform: translateY(0); opacity: 0.7; }
+            100% { transform: translateY(-18px); opacity: 1; }
+        }
+        body.unlocking {
+            overflow: hidden;
+        }
+        body.unlocked {
+            overflow: auto;
+        }
     </style>
+    <script>
+        // 内容淡入动画
+        document.addEventListener('DOMContentLoaded', function() {
+            function revealOnScroll() {
+                var cards = document.querySelectorAll('.card');
+                var windowHeight = window.innerHeight;
+                cards.forEach(function(card) {
+                    var rect = card.getBoundingClientRect();
+                    if (rect.top < windowHeight - 60) {
+                        card.classList.add('visible');
+                    }
+                });
+            }
+            revealOnScroll();
+            window.addEventListener('scroll', revealOnScroll);
+        });
+        // 导航栏高亮
+        document.addEventListener('DOMContentLoaded', function() {
+            var navLinks = document.querySelectorAll('.navbar a');
+            var sections = Array.from(navLinks).map(function(link) {
+                return document.querySelector(link.getAttribute('href'));
+            });
+            function onScroll() {
+                var scrollPos = window.scrollY || window.pageYOffset;
+                sections.forEach(function(section, idx) {
+                    if (section && section.offsetTop - 70 <= scrollPos) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        navLinks[idx].classList.add('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', onScroll);
+        });
+        // 滑动解锁交互
+        document.addEventListener('DOMContentLoaded', function() {
+            var mask = document.createElement('div');
+            mask.className = 'unlock-mask';
+            mask.innerHTML = '<div class="unlock-tip">滑动解锁 <span class="unlock-arrow">↑</span></div>';
+            document.body.appendChild(mask);
+            var banner = document.querySelector('.banner');
+            var startY = 0, currentY = 0, dragging = false, unlocked = false;
+            var unlockDistance = window.innerHeight * 0.22;
+            function setBannerTransform(y) {
+                banner.style.transform = `translateY(${-y}px)`;
+                mask.style.transform = `translateY(${-y}px)`;
+            }
+            function resetBanner() {
+                setBannerTransform(0);
+                mask.classList.remove('hide');
+                document.body.classList.add('unlocking');
+            }
+            function unlockBanner() {
+                setBannerTransform(window.innerHeight);
+                mask.classList.add('hide');
+                banner.style.minHeight = '90px';
+                banner.style.padding = '12px 0 8px 0';
+                banner.style.overflow = 'visible';
+                document.body.classList.remove('unlocking');
+                document.body.classList.add('unlocked');
+                document.querySelector('.container').classList.remove('locked');
+                unlocked = true;
+                setTimeout(function(){
+                    banner.style.transform = '';
+                    mask.remove();
+                }, 500);
+            }
+            function onMove(y) {
+                if (y < 0) y = 0;
+                if (y > window.innerHeight) y = window.innerHeight;
+                setBannerTransform(y);
+            }
+            function onEnd(y) {
+                if (y > unlockDistance) {
+                    unlockBanner();
+                } else {
+                    resetBanner();
+                }
+            }
+            // 触摸事件
+            mask.addEventListener('touchstart', function(e) {
+                if (unlocked) return;
+                dragging = true;
+                startY = e.touches[0].clientY;
+                document.body.classList.add('unlocking');
+            });
+            mask.addEventListener('touchmove', function(e) {
+                if (!dragging || unlocked) return;
+                currentY = startY - e.touches[0].clientY;
+                if (currentY > 0) onMove(currentY);
+            });
+            mask.addEventListener('touchend', function(e) {
+                if (!dragging || unlocked) return;
+                dragging = false;
+                onEnd(currentY);
+                currentY = 0;
+            });
+            // 鼠标事件
+            mask.addEventListener('mousedown', function(e) {
+                if (unlocked) return;
+                dragging = true;
+                startY = e.clientY;
+                document.body.classList.add('unlocking');
+                e.preventDefault();
+            });
+            window.addEventListener('mousemove', function(e) {
+                if (!dragging || unlocked) return;
+                currentY = startY - e.clientY;
+                if (currentY > 0) onMove(currentY);
+            });
+            window.addEventListener('mouseup', function(e) {
+                if (!dragging || unlocked) return;
+                dragging = false;
+                onEnd(currentY);
+                currentY = 0;
+            });
+            // 初始状态
+            resetBanner();
+        });
+    </script>
 </head>
 <body>
-    <div class="banner">
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="avatar">
-        <div class="name">冯昱澔</div>
-        <div class="subtitle">求职意向：大模型实习生</div>
+    <div class="navbar">
+        <ul>
+            <li><a href="#info">基本信息</a></li>
+            <li><a href="#skills">技能</a></li>
+            <li><a href="#edu">教育背景</a></li>
+            <li><a href="#intern">实习经历</a></li>
+            <li><a href="#project">项目经历</a></li>
+            <li><a href="#honor">荣誉竞赛</a></li>
+            <li><a href="#about">自我评价</a></li>
+        </ul>
     </div>
-    <div class="container">
-        <div class="card">
+    <div class="banner">
+        <div class="banner-bg"></div>
+        <div class="banner-mask"></div>
+        <div class="banner-content">
+            <img class="avatar" src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="avatar">
+            <div class="name">冯昱澔</div>
+            <div class="subtitle">求职意向：大模型实习生</div>
+        </div>
+    </div>
+    <div class="container locked">
+        <div class="card" id="info">
             <div class="section-title">基本信息</div>
             <ul class="info-list">
                 <li><span class="icon">🎂</span><strong>生日：</strong>2002.11.17</li>
@@ -153,7 +521,7 @@
                 <li><span class="icon">✉️</span><strong>邮箱：</strong>21711087@bjtu.edu.cn</li>
             </ul>
         </div>
-        <div class="card">
+        <div class="card" id="skills">
             <div class="section-title">编程语言 & 技能</div>
             <div style="margin-bottom: 1em;">
                 <span class="tag">Python</span>
@@ -166,33 +534,34 @@
                 <span class="tag">Pytorch 深度学习</span>
                 <span class="tag">大语言模型调优</span>
             </div>
-            <div style="margin-bottom: 0.5em;">
-                <span style="margin-right:8px;">Python</span>
+            <div class="skill-row">
+                <span class="skill-name">Python</span>
                 <span class="progress-bar"><span class="progress" style="width:95%"></span></span>
-                <span style="color:#2d6cdf;">精通</span>
+                <span class="skill-level">精通</span>
             </div>
-            <div style="margin-bottom: 0.5em;">
-                <span style="margin-right:8px;">C++</span>
+            <div class="skill-row">
+                <span class="skill-name">C++</span>
                 <span class="progress-bar"><span class="progress" style="width:85%"></span></span>
-                <span style="color:#2d6cdf;">熟练</span>
+                <span class="skill-level">熟练</span>
             </div>
-            <div style="margin-bottom: 0.5em;">
-                <span style="margin-right:8px;">Java</span>
+            <div class="skill-row">
+                <span class="skill-name">C</span>
                 <span class="progress-bar"><span class="progress" style="width:70%"></span></span>
-                <span style="color:#2d6cdf;">良好</span>
+                <span class="skill-level">良好</span>
             </div>
         </div>
-        <div class="card">
+        <div class="card" id="edu">
             <div class="section-title">教育背景</div>
-            <ul class="info-list">
-                <li><span class="icon">🎓</span><strong>2021.09-2025.06</strong> 北京交通大学 信息管理与信息系统（本科）<br>
+            <div class="education-item">
+                <strong>2021.09-2025.06</strong> 北京交通大学 信息管理与信息系统（本科）
+                <div class="education-details">
                     主修课程：信息系统开发，数据结构，商业智能，数据分析，数据库基础，数据库开发与应用，系统分析与设计，应用统计。<br>
                     平均成绩：90.4，GPA：3.78，排名：6/106<br>
                     2025.09 学术保研 计算机科学与技术
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
-        <div class="card">
+        <div class="card" id="intern">
             <div class="section-title">实习经历</div>
             <ul class="info-list">
                 <li><span class="icon">💼</span><strong>2023.12-2024.2</strong> 北京ABB贝利工程有限公司 网络安全实习生<br>
@@ -204,12 +573,12 @@
                 </li>
             </ul>
         </div>
-        <div class="card">
+        <div class="card" id="project">
             <div class="section-title">项目经历</div>
             <ul class="info-list">
-                <li><span class="icon">🧑‍💻</span><strong>2024.08</strong> 基于大语言模型的“信管研究方法论”课程阅卷系统开发 负责人<br>
+                <li><span class="icon">🧑‍💻</span><strong>2024.08</strong> 基于大语言模型的"信管研究方法论"课程阅卷系统开发 负责人<br>
                     ● 全栈开发，前后端分离；技术栈：HTML+CSS+JavaScript，Flask，FastAPI。<br>
-                    ● 负责deepseek-r1:8b本地大模型部署、微调、RAG链、提示词工程。开发专注于北京交通大学“信管研究方法论”课程阅卷的大语言模型grading-assistant，自建低秩微调训练语料573条（Alpaca）。<br>
+                    ● 负责deepseek-r1:8b本地大模型部署、微调、RAG链、提示词工程。开发专注于北京交通大学"信管研究方法论"课程阅卷的大语言模型grading-assistant，自建低秩微调训练语料573条（Alpaca）。<br>
                     ● <a class="btn-link" href="https://github.com/FengYuhao1234/-" target="_blank">项目地址</a>
                     <a class="btn-link" href="https://ollama.com/Fengdada/grading-assistant" target="_blank">大语言模型地址</a>
                 </li>
@@ -219,18 +588,18 @@
                 </li>
             </ul>
         </div>
-        <div class="card">
+        <div class="card" id="honor">
             <div class="section-title">荣誉与竞赛经历</div>
             <ul class="honors-list">
-                <li>2021-2022，2022-2023学年“二等学习优秀奖学金”，2023-2024学年“三等优秀学习奖学金”</li>
+                <li>2021-2022，2022-2023学年"二等学习优秀奖学金"，2023-2024学年"三等优秀学习奖学金"</li>
                 <li>2024 全国大学生市场调查与分析大赛 国家级三等奖</li>
                 <li>2023 中国国际大学生创新大赛北京赛区主赛道 北京市级一等奖（团队核心成员）</li>
                 <li>2024 中国国际大学生创新大赛北京赛区 两次获得北京市级二等奖（项目负责人）</li>
-                <li>2024 “挑战杯”首都大学生创业大赛 银奖</li>
+                <li>2024 "挑战杯"首都大学生创业大赛 银奖</li>
                 <li>2021-2022、2022-2023、2023-2024学年 校级三好学生</li>
             </ul>
         </div>
-        <div class="card">
+        <div class="card" id="about">
             <div class="section-title">自我评价</div>
             <p>我具备扎实的专业知识和丰富的实践经验，并且拥有较强的自学能力，可以在较短的时间内接受并应用新的技术。具有较强的团队沟通与协作能力，执行力强。同时我具备良好的时间管理能力，能够在高压环境下保持冷静，高效完成任务。</p>
         </div>
